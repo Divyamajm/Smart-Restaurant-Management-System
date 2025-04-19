@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartResto Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      :root {
+          --primary: #4361ee;
+          --primary-light: #4895ef;
+          --primary-dark: #3a0ca3;
+          --secondary: #f72585;
+          --success: #4cc9f0;
+          --warning: #f8961e;
+          --danger: #ef233c;
+          --light: #f8f9fa;
+          --dark: #212529;
+          --gray: #6c757d;
+          --light-gray: #e9ecef;
+          --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
+          --glass: rgba(255, 255, 255, 0.2);
+          --shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+          --shadow-hover: 0 12px 40px rgba(31, 38, 135, 0.2);
+          --border-radius: 16px;
+          --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          --text-gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      }
+      
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+      
+      body {
+          font-family: 'Poppins', sans-serif;
+          background-color: #f9faff;
+          color: var(--dark);
+          line-height: 1.7;
+          min-height: 100vh;
+          -webkit-font-smoothing: antialiased;
+      }
+      
+      .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 20px;
+      }
+      
+      header {
+          background: var(--gradient);
+          color: white;
+          padding: 20px 0;
+          border-radius: 0 0 var(--border-radius) var(--border-radius);
+          box-shadow: var(--shadow);
+          margin-bottom: 40px;
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          position: relative;
+          overflow: hidden;
+          border-bottom: 1px solid rgba(255,255,255,0.2);
+      }
+      
+      header::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+          transform: rotate(30deg);
+          z-index: 0;
+          animation: rotateGradient 20s linear infinite;
+      }
+      
+      @keyframes rotateGradient {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+      }
+      
+      .header-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: relative;
+          z-index: 1;
+      }
+      
+      .logo {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 1.8rem;
+          font-weight: 700;
+          letter-spacing: -0.5px;
+          text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      
+      .logo i {
+          font-size: 2rem;
+          color: white;
+          filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+      }
+      
+      .card {
+          background: var(--glass);
+          border-radius: var(--border-radius);
+          box-shadow: var(--shadow);
+          padding: 30px;
+          margin-bottom: 30px;
+          transition: var(--transition);
+          border: 1px solid rgba(255,255,255,0.4);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          background: rgba(255, 255, 255, 0.92);
+          position: relative;
+          overflow: hidden;
+      }
+      
+      .card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(135deg, rgba(67,97,238,0.03) 0%, rgba(255,255,255,0) 100%);
+          z-index: -1;
+      }
+      
+      .card:hover {
+          transform: translateY(-8px);
+          box-shadow: var(--shadow-hover);
+          border-color: rgba(255,255,255,0.6);
+      }
+      
+      h1, h2, h3, h4 {
+          margin-bottom: 20px;
+          color: var(--primary-dark);
+          font-weight: 700;
+          letter-spacing: -0.5px;
+      }
+      
+      h1 {
+          font-size: 2.8rem;
+          background: var(--text-gradient);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          display: inline-block;
+          line-height: 1.2;
+      }
+      
+      h2 {
+          font-size: 2rem;
+          border-bottom: 2px solid var(--light-gray);
+          padding-bottom: 12px;
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          position: relative;
+      }
+      
+      h2::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 50px;
+          height: 4px;
+          background: var(--gradient);
+          border-radius: 3px;
+      }
+      
+      h2 i {
+          color: white;
+          background: var(--gradient);
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+      }
+      
+      .form-group {
+          margin-bottom: 25px;
+          position: relative;
+      }
+      
+      label {
+          display: block;
+          margin-bottom: 10px;
+          font-weight: 600;
+          color: var(--dark);
+          font-size: 0.95rem;
+          letter-spacing: 0.3px;
+      }
+      
+      input, select, textarea {
+          width: 100%;
+          padding: 16px 20px;
+          border: 1px solid var(--light-gray);
+          border-radius: 12px;
+          font-size: 1rem;
+          transition: var(--transition);
+          background: rgba(255,255,255,0.9);
+          font-family: 'Poppins', sans-serif;
+          box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+      }
+      
+      textarea {
+          min-height: 120px;
+          resize: vertical;
+          line-height: 1.6;
+      }
+      
+      input:focus, select:focus, textarea:focus {
+          border-color: var(--primary);
+          box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
+          outline: none;
+          background: white;
+      }
+      
+      .btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          padding: 16px 28px;
+          border: none;
+          border-radius: 12px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: var(--transition);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          position: relative;
+          overflow: hidden;
+      }
+      
+      .btn::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0));
+          opacity: 0;
+          transition: var(--transition);
+      }
+      
+      .btn:hover::before {
+          opacity: 1;
+      }
+      
+      .btn i {
+          font-size: 1.1rem;
+          transition: var(--transition);
+      }
+      
+      .btn:hover i {
+          transform: translateX(3px);
+      }
+      
+      .btn-primary {
+          background: var(--gradient);
+          color: white;
+      }
+      
+      .btn-primary:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+      }
+      
+      .btn-secondary {
+          background-color: white;
+          color: var(--primary);
+          border: 1px solid var(--primary);
+      }
+      
+      .btn-secondary:hover {
+          background-color: rgba(67, 97, 238, 0.05);
+          transform: translateY(-3px);
+          color: var(--primary-dark);
+      }
+      
+      .btn-success {
+          background-color: var(--success);
+          color: white;
+      }
+      
+      .btn-success:hover {
+          background-color: #3ab5d9;
+          transform: translateY(-3px);
+          box-shadow: 0 10px 20px rgba(76, 201, 240, 0.3);
+      }
+      
+      .btn-danger {
+          background-color: var(--danger);
+          color: white;
+      }
+      
+      .btn-danger:hover {
+          background-color: #d61f36;
+          transform: translateY(-3px);
+          box-shadow: 0 10px 20px rgba(239, 35, 60, 0.3);
+      }
+      
+      .btn-sm {
+          padding: 12px 18px;
+          font-size: 0.9rem;
+      }
+      
+      .action-buttons {
+          display: flex;
+          gap: 15px;
+          flex-wrap: wrap;
+      }
+      
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px;
+          background: white;
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+          position: relative;
+      }
+      
+      th, td {
+          padding: 18px 20px;
+          text-align: left;
+          border-bottom: 1px solid rgba(0,0,0,0.05);
+      }
+      
+      th {
+          background: var(--gradient);
+          color: white;
+          font-weight: 500;
+          text-transform: uppercase;
+          font-size: 0.85rem;
+          letter-spacing: 0.5px;
+      }
+      
+      tr:last-child td {
+          border-bottom: none;
+      }
+      
+      tr {
+          transition: var(--transition);
+      }
+      
+      tr:hover {
+          background-color: rgba(67, 97, 238, 0.03);
+      }
+      
+      .price {
+          font-weight: 700;
+          color: var(--primary-dark);
+      }
+      
+      .category {
+          display: inline-block;
+          padding: 6px 14px;
+          border-radius: 20px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          background: rgba(67, 97, 238, 0.1);
+          color: var(--primary);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          transition: var(--transition);
+      }
+      
+      .category:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(67, 97, 238, 0.1);
+      }
+      
+      .empty-state {
+          text-align: center;
+          padding: 60px 20px;
+          color: var(--gray);
+      }
+      
+      .empty-state i {
+          font-size: 4rem;
+          margin-bottom: 20px;
+          color: var(--light-gray);
+          opacity: 0.5;
+      }
+      
+      .empty-state h3 {
+          font-size: 1.5rem;
+          margin-bottom: 10px;
+          color: var(--gray);
+      }
+      
+      .empty-state p {
+          font-size: 1rem;
+          color: var(--gray);
+          max-width: 400px;
+          margin: 0 auto;
+      }
+      
+      .notification {
+          position: fixed;
+          top: 30px;
+          right: 30px;
+          padding: 20px 25px;
+          border-radius: var(--border-radius);
+          color: white;
+          font-weight: 500;
+          box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+          transform: translateX(200%);
+          transition: var(--transition);
+          z-index: 1000;
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          background: rgba(67, 97, 238, 0.95);
+          max-width: 350px;
+          border: 1px solid rgba(255,255,255,0.3);
+      }
+      
+      .notification.show {
+          transform: translateX(0);
+      }
+      
+      .notification.success {
+          background: rgba(76, 201, 240, 0.95);
+      }
+      
+      .notification.error {
+          background: rgba(239, 35, 60, 0.95);
+      }
+      
+      .notification i {
+          font-size: 1.5rem;
+      }
+      
+      .login-container {
+          max-width: 500px;
+          margin: 80px auto;
+          padding: 40px;
+          background: var(--glass);
+          border-radius: var(--border-radius);
+          box-shadow: var(--shadow);
+          position: relative;
+          overflow: hidden;
+          border: 1px solid rgba(255,255,255,0.4);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          background: rgba(255, 255, 255, 0.95);
+          transform: translateY(0);
+          transition: var(--transition);
+      }
+      
+      .login-container:hover {
+          transform: translateY(-5px);
+          box-shadow: var(--shadow-hover);
+      }
+      
+      .login-container::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(67,97,238,0.1) 0%, rgba(67,97,238,0) 70%);
+          transform: rotate(30deg);
+          z-index: 0;
+          animation: rotateGradient 20s linear infinite;
+      }
+      
+      .login-title {
+          text-align: center;
+          margin-bottom: 40px;
+          position: relative;
+          z-index: 1;
+      }
+      
+      .login-title i {
+          font-size: 3.5rem;
+          margin-bottom: 15px;
+          background: var(--gradient);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          display: inline-block;
+      }
+      
+      .login-options {
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          margin-bottom: 30px;
+          position: relative;
+          z-index: 1;
+      }
+      
+      .login-option {
+          padding: 20px;
+          border-radius: var(--border-radius);
+          cursor: pointer;
+          transition: var(--transition);
+          text-align: center;
+          border: 2px solid rgba(0,0,0,0.05);
+          flex: 1;
+          background: rgba(255,255,255,0.8);
+          backdrop-filter: blur(5px);
+      }
+      
+      .login-option i {
+          font-size: 2rem;
+          margin-bottom: 10px;
+          color: var(--primary);
+          transition: var(--transition);
+      }
+      
+      .login-option p {
+          font-weight: 600;
+          color: var(--dark);
+          transition: var(--transition);
+      }
+      
+      .login-option.active {
+          border-color: var(--primary);
+          background: rgba(67, 97, 238, 0.1);
+          transform: translateY(-5px);
+          box-shadow: 0 8px 20px rgba(67, 97, 238, 0.15);
+      }
+      
+      .login-option.active i {
+          color: var(--primary-dark);
+          transform: scale(1.1);
+      }
+      
+      .login-option.active p {
+          color: var(--primary-dark);
+          font-weight: 700;
+      }
+      
+      .order-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 20px;
+          border-bottom: 1px solid rgba(0,0,0,0.05);
+          transition: var(--transition);
+      }
+      
+      .order-item:hover {
+          background: rgba(67, 97, 238, 0.03);
+          transform: translateY(-2px);
+      }
+      
+      .order-item:last-child {
+          border-bottom: none;
+      }
+      
+      .order-quantity {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+      }
+      
+      .quantity-btn {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: var(--light-gray);
+          cursor: pointer;
+          user-select: none;
+          transition: var(--transition);
+          font-weight: 600;
+      }
+      
+      .quantity-btn:hover {
+          background: var(--gradient) !important;
+          color: white;
+          transform: scale(1.1);
+      }
+      
+      .bill {
+          background: white;
+          padding: 25px;
+          border-radius: var(--border-radius);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+          margin-top: 30px;
+          background: rgba(255, 255, 255, 0.95);
+          border: 1px solid rgba(255,255,255,0.4);
+      }
+      
+      .bill h3 {
+          font-size: 1.5rem;
+          margin-bottom: 20px;
+          position: relative;
+      }
+      
+      .bill h3::after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+          width: 50px;
+          height: 4px;
+          background: var(--gradient);
+          border-radius: 3px;
+      }
+      
+      .bill-item {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 12px;
+          font-size: 1rem;
+      }
+      
+      .bill-total {
+          font-weight: bold;
+          font-size: 1.5rem;
+          border-top: 2px solid var(--light-gray);
+          padding-top: 15px;
+          margin-top: 15px;
+      }
+      
+      .hidden {
+          display: none;
+      }
+      
+      .menu-item-card {
+          display: flex;
+          flex-direction: column;
+          background: white;
+          border-radius: var(--border-radius);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+          overflow: hidden;
+          transition: var(--transition);
+          height: 100%;
+          position: relative;
+          border: 1px solid rgba(255,255,255,0.4);
+      }
+      
+      .menu-item-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+      }
+      
+      .menu-item-image {
+          height: 200px;
+          background: var(--light-gray);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--gray);
+          position: relative;
+          overflow: hidden;
+      }
+      
+      .menu-item-image::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0));
+      }
+      
+      .menu-item-image i {
+          font-size: 3.5rem;
+          opacity: 0.3;
+      }
+      
+      .menu-item-content {
+          padding: 24px;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+      }
+      
+      .menu-item-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 12px;
+      }
+      
+      .menu-item-title {
+          font-size: 1.3rem;
+          font-weight: 700;
+          color: var(--dark);
+          line-height: 1.3;
+      }
+      
+      .menu-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          gap: 30px;
+          margin-top: 30px;
+      }
+      
+      .floating-btn {
+          position: fixed;
+          bottom: 30px;
+          right: 30px;
+          width: 70px;
+          height: 70px;
+          border-radius: 50%;
+          background: var(--gradient);
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.8rem;
+          box-shadow: 0 12px 30px rgba(67, 97, 238, 0.3);
+          cursor: pointer;
+          transition: var(--transition);
+          z-index: 100;
+          border: none;
+          border: 1px solid rgba(255,255,255,0.4);
+      }
+      
+      .floating-btn:hover {
+          transform: scale(1.1) translateY(-5px);
+          box-shadow: 0 15px 35px rgba(67, 97, 238, 0.4);
+      }
+      
+      .badge {
+          display: inline-block;
+          padding: 5px 10px;
+          border-radius: 20px;
+          font-size: 0.8rem;
+          font-weight: 700;
+          background: var(--gradient);
+          color: white;
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      
+      .order-count {
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          background: var(--secondary);
+          color: white;
+          border-radius: 50%;
+          width: 24px;
+          height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.8rem;
+          font-weight: bold;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      }
+      
+      @media (max-width: 768px) {
+          .header-content {
+              flex-direction: column;
+              gap: 15px;
+              text-align: center;
+          }
+          
+          .action-buttons {
+              flex-direction: column;
+          }
+          
+          table {
+              display: block;
+              overflow-x: auto;
+          }
+          
+          .login-options {
+              flex-direction: column;
+          }
+          
+          .login-container {
+              margin: 40px 20px;
+              padding: 30px;
+          }
+          
+          .menu-grid {
+              grid-template-columns: 1fr;
+          }
+          
+          .floating-btn {
+              width: 60px;
+              height: 60px;
+              font-size: 1.5rem;
+              bottom: 20px;
+              right: 20px;
+          }
+      }
+      
+      /* Animation classes */
+      .fade-in {
+          animation: fadeIn 0.6s ease-in-out;
+      }
+      
+      .slide-up {
+          animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      
+      @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+      }
+      
+      @keyframes slideUp {
+          from { 
+              opacity: 0;
+              transform: translateY(30px);
+          }
+          to { 
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+      
+      /* Pulse animation for call to action */
+      @keyframes pulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+          100% { transform: scale(1); }
+      }
+      
+      .pulse {
+          animation: pulse 2s infinite;
+      }
+      
+      /* Floating animation */
+      @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+      }
+      
+      .float {
+          animation: float 4s ease-in-out infinite;
+      }
+      
+      /* Glow effect */
+      .glow {
+          filter: drop-shadow(0 0 8px rgba(67, 97, 238, 0.3));
+      }
+  </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container slide-up">
+        <h1 class="login-title">
+            <i class="fas fa-utensils"></i><br>
+            SmartResto Pro
+        </h1>
+        <div class="login-options">
+            <div class="login-option active" onclick="setLoginType('customer')">
+                <i class="fas fa-user"></i>
+                <p>Customer</p>
+            </div>
+            <div class="login-option" onclick="setLoginType('admin')">
+                <i class="fas fa-lock"></i>
+                <p>Admin</p>
+            </div>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="form-group" id="passwordGroup">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            
+            <button type="submit" class="btn btn-primary pulse" style="width: 100%;">
+                <i class="fas fa-sign-in-alt"></i> Continue
+            </button>
+        </form>
+    </div>
+    
+    <!-- Main App (Hidden Initially) -->
+    <div id="appContainer" class="hidden">
+        <header>
+            <div class="container header-content">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>SmartResto Pro</span>
+                </div>
+                <div class="header-actions">
+                    <span id="userRoleDisplay" style="color: white; margin-right: 15px; font-weight: 500;"></span>
+                    <button class="btn btn-secondary" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <div class="container">
+            <!-- Admin Panel -->
+            <div id="adminPanel" class="hidden">
+                <div class="card fade-in">
+                    <h2><i class="fas fa-plus-circle"></i> Add New Menu Item</h2>
+                    <form id="menuForm">
+                        <div class="form-group">
+                            <label for="itemName">Item Name</label>
+                            <input type="text" id="itemName" placeholder="e.g., Margherita Pizza" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="itemCategory">Category</label>
+                            <select id="itemCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="Appetizers">Appetizers</option>
+                                <option value="Main Courses">Main Courses</option>
+                                <option value="Desserts">Desserts</option>
+                                <option value="Beverages">Beverages</option>
+                                <option value="Specials">Chef's Specials</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="itemPrice">Price ($)</label>
+                            <input type="number" id="itemPrice" min="0" step="0.01" placeholder="e.g., 12.99" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="itemDescription">Description</label>
+                            <textarea id="itemDescription" placeholder="Short description of the item"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="itemImage">Image URL (optional)</label>
+                            <input type="text" id="itemImage" placeholder="Paste image URL here">
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Save Item
+                            </button>
+                            <button type="button" id="clearForm" class="btn btn-secondary">
+                                <i class="fas fa-eraser"></i> Clear Form
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="card fade-in">
+                    <h2><i class="fas fa-list"></i> Menu Items</h2>
+                    <div id="menuTableContainer">
+                        <table id="menuTable">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="menuItems">
+                                <!-- Menu items will be loaded here -->
+                            </tbody>
+                        </table>
+                        <div id="emptyState" class="empty-state" style="display: none;">
+                            <i class="fas fa-utensil-spoon"></i>
+                            <h3>No Menu Items Found</h3>
+                            <p>Add your first menu item using the form above</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Customer Panel -->
+            <div id="customerPanel" class="hidden">
+                <div class="card fade-in">
+                    <h2><i class="fas fa-utensils"></i> Our Menu</h2>
+                    <div id="customerMenuItems">
+                        <!-- Menu items for customers will be loaded here -->
+                    </div>
+                </div>
+                
+                <div class="card fade-in">
+                    <h2><i class="fas fa-receipt"></i> Your Order</h2>
+                    <div id="orderItems">
+                        <div class="empty-state">
+                            <i class="fas fa-shopping-cart"></i>
+                            <h3>Your cart is empty</h3>
+                            <p>Select items from the menu to get started</p>
+                        </div>
+                    </div>
+                    
+                    <div id="billContainer" class="bill hidden">
+                        <h3>Bill Summary</h3>
+                        <div id="billItems">
+                            <!-- Bill items will be loaded here -->
+                        </div>
+                        <div class="bill-item bill-total">
+                            <span>Total:</span>
+                            <span id="totalAmount">$0.00</span>
+                        </div>
+                        
+                        <button class="btn btn-primary pulse" style="width: 100%; margin-top: 20px;" onclick="placeOrder()">
+                            <i class="fas fa-paper-plane"></i> Place Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating cart button for mobile -->
+        <button id="floatingCartBtn" class="floating-btn hidden" onclick="scrollToOrder()">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="floatingCartCount" class="order-count hidden">0</span>
+        </button>
+    </div>
+    
+    <div id="notification" class="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationMessage">Item added successfully!</span>
+    </div>
+
+    <script>
+        // Enhanced initial data with images
+        const users = {
+            admin: { password: "admin123", role: "admin" },
+            customer: { password: "", role: "customer" }
+        };
+        
+        let menuItems = [
+    // 🔥 APPETIZERS
+    { 
+        id: 1,
+        name: "Samosa", 
+        category: "Appetizers", 
+        price: 4.50, 
+        description: "Golden-fried pastry pockets filled with spicy mashed potatoes and green peas.",
+        image: "https://www.archanaskitchen.com/images/archanaskitchen/1-Author/shaheen_ali/Punjabi_Samosa_Recipe_Pyaz_Ke_Samose_.jpg"
+    },
+    { 
+        id: 2,
+        name: "Paneer Tikka", 
+        category: "Appetizers", 
+        price: 8.99, 
+        description: "Cubes of paneer marinated in spices and grilled in a tandoor.",
+        image: "https://www.whiskaffair.com/wp-content/uploads/2020/06/Paneer-Tikka-2-3.jpg"
+    },
+    { 
+        id: 3,
+        name: "Hara Bhara Kabab", 
+        category: "Appetizers", 
+        price: 7.25, 
+        description: "Spinach and green pea cutlets served with tangy mint chutney.",
+        image: "https://www.indianveggiedelight.com/wp-content/uploads/2021/08/hara-bhara-kebab-instant-pot-featured.jpg"
+    },
+
+    // 🍛 MAIN COURSES
+    { 
+        id: 4,
+        name: "Paneer Butter Masala", 
+        category: "Main Courses", 
+        price: 13.99, 
+        description: "Rich, creamy gravy with tender cubes of paneer cooked in tomato-butter sauce.",
+        image: "https://www.whiskaffair.com/wp-content/uploads/2020/04/Paneer-Butter-Masala-2-3.jpg"
+    },
+    { 
+        id: 5,
+        name: "Chicken Biryani", 
+        category: "Main Courses", 
+        price: 15.75, 
+        description: "Layered basmati rice cooked with aromatic spices, saffron, and marinated chicken.",
+        image: "https://www.indianhealthyrecipes.com/wp-content/uploads/2019/02/chicken-biryani-recipe-500x500.jpg" // Verified correct
+    },
+    { 
+        id: 6,
+        name: "Dal Makhani", 
+        category: "Main Courses", 
+        price: 10.50, 
+        description: "Slow-cooked black lentils in a creamy buttery sauce with aromatic spices.",
+        image: "https://www.indianhealthyrecipes.com/wp-content/uploads/2022/02/dal-makhani-recipe.jpg" // Verified correct
+    },
+    { 
+        id: 7,
+        name: "Butter Chicken", 
+        category: "Main Courses", 
+        price: 14.99, 
+        description: "Succulent chicken pieces in a luscious tomato-butter-cream gravy.",
+        image: "https://www.whiskaffair.com/wp-content/uploads/2021/03/Butter-Chicken-2-3.jpg"
+    },
+    { 
+        id: 8,
+        name: "Aloo Gobi", 
+        category: "Main Courses", 
+        price: 9.50, 
+        description: "Dry curry made with potatoes, cauliflower, and Indian spices.",
+        image: "https://www.indianveggiedelight.com/wp-content/uploads/2020/08/aloo-gobi-instant-pot-featured.jpg"
+    },
+
+    // 🍞 BREADS
+    { 
+        id: 9,
+        name: "Garlic Naan", 
+        category: "Breads", 
+        price: 3.99, 
+        description: "Soft tandoori naan topped with minced garlic and coriander.",
+        image: "https://www.whiskaffair.com/wp-content/uploads/2020/04/Garlic-Naan-2-3.jpg"
+    },
+    { 
+        id: 10,
+        name: "Tandoori Roti", 
+        category: "Breads", 
+        price: 2.50, 
+        description: "Whole wheat flatbread cooked in a clay oven.",
+        image: "https://www.archanaskitchen.com/images/archanaskitchen/1-Author/shaheen_ali/Tandoori_Roti_Recipe-2.jpg"
+    },
+    { 
+        id: 11,
+        name: "Stuffed Paratha", 
+        category: "Breads", 
+        price: 4.25, 
+        description: "Pan-fried flatbread filled with spicy mashed potatoes.",
+        image: "https://www.indianveggiedelight.com/wp-content/uploads/2021/06/aloo-paratha-instant-pot-featured.jpg"
+    },
+
+    // 🍰 DESSERTS
+    { 
+        id: 12,
+        name: "Gulab Jamun", 
+        category: "Desserts", 
+        price: 5.25, 
+        description: "Deep-fried khoya balls soaked in cardamom-scented sugar syrup.",
+        image: "https://www.whiskaffair.com/wp-content/uploads/2020/04/Gulab-Jamun-2-3.jpg"
+    },
+    { 
+        id: 13,
+        name: "Rasmalai", 
+        category: "Desserts", 
+        price: 6.00, 
+        description: "Cottage cheese patties soaked in sweet saffron milk.",
+        image: "https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Neha_Mathur/Aam_Rasmalai_Recipe__Bengali_Rasmalai_With_Mango_Pulp-4.jpg"
+    },
+    { 
+        id: 14,
+        name: "Kheer", 
+        category: "Desserts", 
+        price: 4.99, 
+        description: "Traditional rice pudding flavored with cardamom, nuts, and saffron.",
+        image: "https://www.indianveggiedelight.com/wp-content/uploads/2021/10/instant-pot-kheer-featured.jpg"
+    },
+
+    // 🫖 BEVERAGES
+    { 
+        id: 15,
+        name: "Masala Chai", 
+        category: "Beverages", 
+        price: 2.99, 
+        description: "Indian spiced tea brewed with milk, ginger, cardamom, and cloves.",
+        image: "https://www.whiskaffair.com/wp-content/uploads/2020/04/Masala-Chai-2-3.jpg"
+    },
+    { 
+        id: 16,
+        name: "Sweet Lassi", 
+        category: "Beverages", 
+        price: 3.75, 
+        description: "Chilled yogurt-based drink flavored with sugar and rose water.",
+        image: "https://www.archanaskitchen.com/images/archanaskitchen/1-Author/sibyl_sunitha/Sweet_Lassi_Recipe-3.jpg"
+    },
+    { 
+        id: 17,
+        name: "Mango Lassi", 
+        category: "Beverages", 
+        price: 4.25, 
+        description: "A delicious and creamy blend of mango pulp and yogurt.",
+        image: "https://www.indianhealthyrecipes.com/wp-content/uploads/2022/04/mango-lassi-recipe.jpg" // Verified correct
+    }
+];
+
+        
+        let currentUser = null;
+        let currentOrder = [];
+        let currentEditItem = null;
+        let loginType = "customer";
+
+        // DOM elements
+        const loginScreen = document.getElementById('loginScreen');
+        const appContainer = document.getElementById('appContainer');
+        const adminPanel = document.getElementById('adminPanel');
+        const customerPanel = document.getElementById('customerPanel');
+        const userRoleDisplay = document.getElementById('userRoleDisplay');
+        const passwordGroup = document.getElementById('passwordGroup');
+        const loginForm = document.getElementById('loginForm');
+        const menuForm = document.getElementById('menuForm');
+        const menuTable = document.getElementById('menuItems');
+        const customerMenuItems = document.getElementById('customerMenuItems');
+        const orderItems = document.getElementById('orderItems');
+        const billContainer = document.getElementById('billContainer');
+        const billItems = document.getElementById('billItems');
+        const totalAmount = document.getElementById('totalAmount');
+        const emptyState = document.getElementById('emptyState');
+        const notification = document.getElementById('notification');
+        const notificationMessage = document.getElementById('notificationMessage');
+        const floatingCartBtn = document.getElementById('floatingCartBtn');
+        const floatingCartCount = document.getElementById('floatingCartCount');
+
+        // Set login type (customer/admin)
+        function setLoginType(type) {
+            loginType = type;
+            const options = document.querySelectorAll('.login-option');
+            options.forEach(opt => opt.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            if (type === 'customer') {
+                passwordGroup.style.display = 'none';
+                document.getElementById('password').required = false;
+            } else {
+                passwordGroup.style.display = 'block';
+                document.getElementById('password').required = true;
+            }
+        }
+
+        // Login function
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            
+            if (loginType === 'admin') {
+                if (users.admin && password === users.admin.password) {
+                    currentUser = { username, role: 'admin' };
+                    showApp();
+                } else {
+                    showNotification('Invalid admin credentials', 'error');
+                }
+            } else {
+                currentUser = { username, role: 'customer' };
+                showApp();
+            }
+        });
+
+        // Show main app after login
+        function showApp() {
+            loginScreen.classList.add('hidden');
+            appContainer.classList.remove('hidden');
+            userRoleDisplay.textContent = currentUser.role === 'admin' ? 'Admin' : `Customer: ${currentUser.username}`;
+            
+            if (currentUser.role === 'admin') {
+                adminPanel.classList.remove('hidden');
+                customerPanel.classList.add('hidden');
+                displayMenuItems();
+            } else {
+                adminPanel.classList.add('hidden');
+                customerPanel.classList.remove('hidden');
+                displayCustomerMenu();
+            }
+            
+            // Add animation classes
+            document.querySelectorAll('.card').forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        }
+
+        // Logout function
+        function logout() {
+            currentUser = null;
+            currentOrder = [];
+            appContainer.classList.add('hidden');
+            loginScreen.classList.remove('hidden');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            loginType = 'customer';
+            setLoginType('customer');
+            floatingCartBtn.classList.add('hidden');
+        }
+
+        // Display notification
+        function showNotification(message, type = 'success') {
+            notification.className = `notification ${type}`;
+            notification.querySelector('i').className = type === 'success' 
+                ? 'fas fa-check-circle' 
+                : 'fas fa-exclamation-circle';
+            notificationMessage.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Check and show empty state
+        function checkEmptyState() {
+            if (menuItems.length === 0) {
+                emptyState.style.display = 'block';
+                document.getElementById('menuTable').style.display = 'none';
+            } else {
+                emptyState.style.display = 'none';
+                document.getElementById('menuTable').style.display = 'table';
+            }
+        }
+
+        // Display menu items in the admin table
+        function displayMenuItems() {
+            menuTable.innerHTML = '';
+            
+            menuItems.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.className = 'fade-in';
+                
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td><span class="category">${item.category}</span></td>
+                    <td class="price">$${item.price.toFixed(2)}</td>
+                    <td>${item.description || '-'}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-success btn-sm" onclick="editMenuItem(${index})">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteMenuItem(${index})">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                menuTable.appendChild(row);
+            });
+            
+            checkEmptyState();
+        }
+
+        // Display menu for customers
+        function displayCustomerMenu() {
+            customerMenuItems.innerHTML = '';
+            
+            if (menuItems.length === 0) {
+                customerMenuItems.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-utensil-spoon"></i>
+                        <h3>Menu Coming Soon</h3>
+                        <p>We're currently working on our menu</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Group by category
+            const categories = [...new Set(menuItems.map(item => item.category))];
+            
+            categories.forEach(category => {
+                const categoryElement = document.createElement('div');
+                categoryElement.className = 'fade-in';
+                categoryElement.innerHTML = `
+                    <h3 style="margin: 20px 0 10px; color: var(--primary-dark); position: relative; padding-left: 15px;">
+                        <span style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 5px; height: 70%; background: var(--gradient); border-radius: 5px;"></span>
+                        ${category}
+                    </h3>
+                    <div class="menu-grid" id="${category.replace(/\s+/g, '-')}-items"></div>
+                `;
+                customerMenuItems.appendChild(categoryElement);
+                
+                const categoryItems = menuItems.filter(item => item.category === category);
+                const itemsContainer = document.getElementById(`${category.replace(/\s+/g, '-')}-items`);
+                
+                categoryItems.forEach((item, index) => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'menu-item-card fade-in';
+                    itemElement.style.animationDelay = `${index * 0.1}s`;
+                    
+                    // Get current quantity from order
+                    const orderItem = currentOrder.find(i => i.id === item.id);
+                    const quantity = orderItem ? orderItem.quantity : 0;
+                    
+                    itemElement.innerHTML = `
+                        <div class="menu-item-image" style="${item.image ? `background: url('${item.image}') center/cover;` : ''}">
+                            ${!item.image ? `<i class="fas fa-utensils"></i>` : ''}
+                            ${quantity > 0 ? `<span class="badge">${quantity} in cart</span>` : ''}
+                        </div>
+                        <div class="menu-item-content">
+                            <div class="menu-item-header">
+                                <h3 class="menu-item-title">${item.name}</h3>
+                                <span class="price">$${item.price.toFixed(2)}</span>
+                            </div>
+                            <p style="margin-bottom: 15px; color: var(--gray); font-size: 0.9rem;">${item.description || ''}</p>
+                            <div class="order-quantity" style="margin-top: auto;">
+                                <div class="quantity-btn" onclick="decreaseQuantity(${item.id})">-</div>
+                                <span id="quantity-${item.id}" style="min-width: 20px; text-align: center;">${quantity}</span>
+                                <div class="quantity-btn" onclick="increaseQuantity(${item.id})">+</div>
+                            </div>
+                        </div>
+                    `;
+                    itemsContainer.appendChild(itemElement);
+                });
+            });
+            
+            // Show/hide floating cart button based on order items
+            updateFloatingCart();
+        }
+
+        // Add or update menu item
+        menuForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newItem = {
+                id: currentEditItem !== null ? menuItems[currentEditItem].id : Date.now(),
+                name: document.getElementById('itemName').value.trim(),
+                category: document.getElementById('itemCategory').value,
+                price: parseFloat(document.getElementById('itemPrice').value),
+                description: document.getElementById('itemDescription').value.trim(),
+                image: document.getElementById('itemImage').value.trim() || null
+            };
+            
+            if (currentEditItem !== null) {
+                // Update existing item
+                menuItems[currentEditItem] = newItem;
+                showNotification('Menu item updated successfully!');
+                currentEditItem = null;
+                document.querySelector('#menuForm button[type="submit"]').innerHTML = '<i class="fas fa-save"></i> Save Item';
+            } else {
+                // Add new item
+                menuItems.push(newItem);
+                showNotification('Menu item added successfully!');
+            }
+            
+            displayMenuItems();
+            if (currentUser.role === 'customer') displayCustomerMenu();
+            this.reset();
+        });
+
+        // Edit menu item
+        function editMenuItem(index) {
+            currentEditItem = index;
+            const item = menuItems[index];
+            
+            document.getElementById('itemName').value = item.name;
+            document.getElementById('itemCategory').value = item.category;
+            document.getElementById('itemPrice').value = item.price;
+            document.getElementById('itemDescription').value = item.description || '';
+            document.getElementById('itemImage').value = item.image || '';
+            
+            document.querySelector('#menuForm button[type="submit"]').innerHTML = '<i class="fas fa-save"></i> Update Item';
+            
+            // Scroll to form
+            document.getElementById('menuForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Delete menu item
+        function deleteMenuItem(index) {
+            if (confirm('Are you sure you want to delete this menu item?')) {
+                const deletedItem = menuItems[index];
+                menuItems.splice(index, 1);
+                
+                // Remove from current order if exists
+                currentOrder = currentOrder.filter(item => item.id !== deletedItem.id);
+                
+                displayMenuItems();
+                if (currentUser.role === 'customer') {
+                    displayCustomerMenu();
+                    updateOrderDisplay();
+                }
+                showNotification(`"${deletedItem.name}" has been deleted`, 'error');
+                
+                if (currentEditItem === index) {
+                    menuForm.reset();
+                    currentEditItem = null;
+                    document.querySelector('#menuForm button[type="submit"]').innerHTML = '<i class="fas fa-save"></i> Save Item';
+                }
+            }
+        }
+
+        // Order quantity functions
+        function increaseQuantity(itemId) {
+            const menuItem = menuItems.find(item => item.id === itemId);
+            if (!menuItem) return;
+            
+            const existingItemIndex = currentOrder.findIndex(i => i.id === itemId);
+            
+            if (existingItemIndex !== -1) {
+                currentOrder[existingItemIndex].quantity++;
+            } else {
+                currentOrder.push({
+                    ...menuItem,
+                    quantity: 1
+                });
+            }
+            
+            updateOrderDisplay();
+            showNotification(`${menuItem.name} added to order`);
+        }
+
+        function decreaseQuantity(itemId) {
+            const menuItem = menuItems.find(item => item.id === itemId);
+            const existingItemIndex = currentOrder.findIndex(i => i.id === itemId);
+            
+            if (existingItemIndex !== -1) {
+                if (currentOrder[existingItemIndex].quantity > 1) {
+                    currentOrder[existingItemIndex].quantity--;
+                } else {
+                    currentOrder.splice(existingItemIndex, 1);
+                }
+                updateOrderDisplay();
+                
+                if (menuItem) {
+                    showNotification(`${menuItem.name} removed from order`);
+                }
+            }
+        }
+
+        // Update order display
+        function updateOrderDisplay() {
+            if (currentOrder.length === 0) {
+                orderItems.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>Your cart is empty</h3>
+                        <p>Select items from the menu to get started</p>
+                    </div>
+                `;
+                billContainer.classList.add('hidden');
+                displayCustomerMenu();
+                updateFloatingCart();
+                return;
+            }
+            
+            orderItems.innerHTML = '';
+            currentOrder.forEach((item, index) => {
+                const orderItem = document.createElement('div');
+                orderItem.className = 'order-item fade-in';
+                orderItem.style.animationDelay = `${index * 0.1}s`;
+                orderItem.innerHTML = `
+                    <div>
+                        <h4>${item.name}</h4>
+                        <span class="price">$${item.price.toFixed(2)}</span>
+                    </div>
+                    <div class="order-quantity">
+                        <div class="quantity-btn" onclick="decreaseOrderItem(${item.id})">-</div>
+                        <span>${item.quantity}</span>
+                        <div class="quantity-btn" onclick="increaseOrderItem(${item.id})">+</div>
+                    </div>
+                `;
+                orderItems.appendChild(orderItem);
+            });
+            
+            updateBill();
+            billContainer.classList.remove('hidden');
+            displayCustomerMenu(); // Refresh the menu to update quantities
+            updateFloatingCart();
+        }
+
+        // Update floating cart button
+        function updateFloatingCart() {
+            const totalItems = currentOrder.reduce((sum, item) => sum + item.quantity, 0);
+            
+            if (totalItems > 0) {
+                floatingCartBtn.classList.remove('hidden');
+                floatingCartCount.textContent = totalItems;
+                floatingCartCount.classList.remove('hidden');
+            } else {
+                floatingCartBtn.classList.add('hidden');
+                floatingCartCount.classList.add('hidden');
+            }
+        }
+
+        // Scroll to order section
+        function scrollToOrder() {
+            document.getElementById('orderItems').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Increase/Decrease order items
+        function increaseOrderItem(itemId) {
+            const item = currentOrder.find(i => i.id === itemId);
+            if (item) item.quantity++;
+            updateOrderDisplay();
+        }
+
+        function decreaseOrderItem(itemId) {
+            const menuItem = menuItems.find(item => item.id === itemId);
+            const itemIndex = currentOrder.findIndex(i => i.id === itemId);
+            
+            if (itemIndex !== -1) {
+                if (currentOrder[itemIndex].quantity > 1) {
+                    currentOrder[itemIndex].quantity--;
+                } else {
+                    currentOrder.splice(itemIndex, 1);
+                }
+            }
+            
+            updateOrderDisplay();
+            
+            if (menuItem) {
+                showNotification(`${menuItem.name} removed from order`);
+            }
+        }
+
+        // Update bill
+        function updateBill() {
+            billItems.innerHTML = '';
+            let total = 0;
+            let subtotal = 0;
+            const taxRate = 0.08; // 8% tax
+            
+            currentOrder.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const billItem = document.createElement('div');
+                billItem.className = 'bill-item';
+                billItem.innerHTML = `
+                    <span>${item.name} x${item.quantity}</span>
+                    <span>$${itemTotal.toFixed(2)}</span>
+                `;
+                billItems.appendChild(billItem);
+            });
+            
+            // Add subtotal
+            const subtotalElement = document.createElement('div');
+            subtotalElement.className = 'bill-item';
+            subtotalElement.innerHTML = `
+                <span>Subtotal:</span>
+                <span>$${subtotal.toFixed(2)}</span>
+            `;
+            billItems.appendChild(subtotalElement);
+            
+            // Add tax
+            const tax = subtotal * taxRate;
+            const taxElement = document.createElement('div');
+            taxElement.className = 'bill-item';
+            taxElement.innerHTML = `
+                <span>Tax (8%):</span>
+                <span>$${tax.toFixed(2)}</span>
+            `;
+            billItems.appendChild(taxElement);
+            
+            total = subtotal + tax;
+            totalAmount.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Place order
+        function placeOrder() {
+            if (currentOrder.length === 0) {
+                showNotification('Your cart is empty', 'error');
+                return;
+            }
+            
+            let orderSummary = "Order Details:\n\n";
+            let subtotal = 0;
+            const taxRate = 0.08;
+            
+            currentOrder.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                orderSummary += `${item.name} x${item.quantity} - $${itemTotal.toFixed(2)}\n`;
+            });
+            
+            const tax = subtotal * taxRate;
+            const total = subtotal + tax;
+            
+            orderSummary += `\nSubtotal: $${subtotal.toFixed(2)}`;
+            orderSummary += `\nTax (8%): $${tax.toFixed(2)}`;
+            orderSummary += `\nTotal: $${total.toFixed(2)}`;
+            
+            // Create a more visually appealing alert
+            const alertBox = document.createElement('div');
+            alertBox.style.position = 'fixed';
+            alertBox.style.top = '0';
+            alertBox.style.left = '0';
+            alertBox.style.width = '100%';
+            alertBox.style.height = '100%';
+            alertBox.style.backgroundColor = 'rgba(0,0,0,0.5)';
+            alertBox.style.display = 'flex';
+            alertBox.style.justifyContent = 'center';
+            alertBox.style.alignItems = 'center';
+            alertBox.style.zIndex = '2000';
+            
+            const alertContent = document.createElement('div');
+            alertContent.style.backgroundColor = 'white';
+            alertContent.style.padding = '30px';
+            alertContent.style.borderRadius = 'var(--border-radius)';
+            alertContent.style.maxWidth = '500px';
+            alertContent.style.width = '90%';
+            alertContent.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
+            alertContent.style.textAlign = 'center';
+            
+            alertContent.innerHTML = `
+                <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--success); margin-bottom: 20px;"></i>
+                <h2 style="margin-bottom: 15px;">Order Confirmed!</h2>
+                <p style="margin-bottom: 20px;">Thank you for your order, ${currentUser.username}!</p>
+                <div style="text-align: left; margin-bottom: 25px; background: var(--light-gray); padding: 15px; border-radius: 10px;">
+                    ${orderSummary.replace(/\n/g, '<br>')}
+                </div>
+                <button onclick="this.parentElement.parentElement.remove()" style="
+                    background: var(--gradient);
+                    color: white;
+                    border: none;
+                    padding: 12px 25px;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: var(--transition);
+                ">
+                    Continue
+                </button>
+            `;
+            
+            alertBox.appendChild(alertContent);
+            document.body.appendChild(alertBox);
+            
+            // Reset order
+            currentOrder = [];
+            updateOrderDisplay();
+            showNotification('Order placed successfully!');
+        }
+
+        // Initialize the page
+        setLoginType('customer');
+        
+        // Clear form button
+        document.getElementById('clearForm').addEventListener('click', function() {
+            document.getElementById('menuForm').reset();
+            currentEditItem = null;
+            document.querySelector('#menuForm button[type="submit"]').innerHTML = '<i class="fas fa-save"></i> Save Item';
+        });
+    </script>
+</body>
+</html>
